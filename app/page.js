@@ -1,7 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 
-export default function Home() {
+export default async function Home() {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);

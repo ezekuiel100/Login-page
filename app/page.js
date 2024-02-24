@@ -1,7 +1,8 @@
 "use client";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
-export default async function Home() {
+export default function Home() {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -19,7 +20,7 @@ export default async function Home() {
 
   return (
     <main className="flex justify-center items-center h-screen">
-      <div className="w-72">
+      <div className="w-80">
         <h1 className="font-bold text-xl text-center mb-10">
           Sign in to your account
         </h1>
@@ -37,9 +38,12 @@ export default async function Home() {
             className="focus:bg-blue-100 outline-none border border-gray-400 p-2 text-sm"
           ></input>
           <div className="text-right">
-            <a href="#" className="text-sm text-blue-600 font-medium ">
-              Forgot your password?
-            </a>
+            <Link
+              href="/register"
+              className="text-sm text-blue-600 font-medium "
+            >
+              Create account
+            </Link>
           </div>
           <button className="bg-blue-500 rounded-lg text-white text-sm mt-2 p-1">
             Sign in

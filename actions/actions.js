@@ -1,5 +1,8 @@
 "use server";
 import prisma from "@/database/prisma";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
 
 export async function createUser(formData) {
   try {
@@ -7,16 +10,14 @@ export async function createUser(formData) {
     const email = formData.get("email");
     const password = formData.get("password");
 
-    formData.forEach((value, key) => {
-      formData.set(key, ""); // Define o valor do campo para vazio
-    });
+    const hash = bcrypt.hashSync(password, saltRounds);
 
-    if (name && email && password) {
+    if (name && email && hash) {
       await prisma.user.create({
         data: {
-          name: name,
-          email: email,
-          password: password,
+          name,
+          email,
+          password: hash,
         },
       });
     }

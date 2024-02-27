@@ -1,6 +1,8 @@
 "use client";
 import { createUser } from "@/actions/actions";
 import { useRef } from "react";
+import Button from "@/components/button";
+import { redirect } from "next/navigation";
 
 function Form() {
   const ref = useRef(null);
@@ -13,6 +15,7 @@ function Form() {
         ref.current?.reset();
 
         await createUser(formData);
+        redirect("/");
       }}
     >
       <input
@@ -37,9 +40,7 @@ function Form() {
         required
       ></input>
       <div className="text-right"></div>
-      <button className="bg-blue-500 rounded-lg text-white text-sm mt-4 p-1">
-        Register
-      </button>
+      <Button />
     </form>
   );
 }

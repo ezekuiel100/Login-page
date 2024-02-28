@@ -1,10 +1,16 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
+import { z } from "zod";
 
 export default function Home() {
+  let [pending, setPending] = useState(false);
+
   function handleSubmit(event) {
     event.preventDefault();
+    setPending(true);
+
     const formData = new FormData(event.currentTarget);
 
     const data = {
@@ -30,12 +36,14 @@ export default function Home() {
             name="email"
             placeholder="Email address"
             className="focus:bg-blue-100 outline-none border border-gray-400 p-2 border-b-0 text-sm"
+            required
           ></input>
           <input
             type="password"
             name="password"
             placeholder="Password"
             className="focus:bg-blue-100 outline-none border border-gray-400 p-2 text-sm"
+            required
           ></input>
           <div className="text-right">
             <Link
@@ -45,7 +53,11 @@ export default function Home() {
               Create account
             </Link>
           </div>
-          <button className="bg-blue-500 rounded-lg text-white text-sm mt-2 p-1">
+
+          <button
+            disabled={pending}
+            className="bg-blue-500 rounded-lg text-white text-sm mt-2 p-1 disabled:bg-blue-300"
+          >
             Sign in
           </button>
         </form>

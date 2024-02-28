@@ -6,9 +6,13 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const User = z.object({
-  name: z.string().min(1),
+  name: z
+    .string()
+    .min(1, { message: "Name must contain at least 1 character" }),
   email: z.string().email(),
-  password: z.string().min(4),
+  password: z
+    .string()
+    .min(4, { message: "Password must contain at least 4 character(s)" }),
 });
 
 const saltRounds = 10;
@@ -24,7 +28,7 @@ export async function createUser(formData) {
     const user = User.safeParse(data);
 
     if (!user.success) {
-      return;
+      return { error: user.error.issues[0].message };
     }
 
     const hash = bcrypt.hashSync(password, saltRounds);
@@ -39,7 +43,11 @@ export async function createUser(formData) {
       });
     }
   } catch (error) {
-    console.log(error.message);
+    if (error.meta.target[0] === "email") {
+      return { error: "Email is already being used" };
+    }
+
+    return null;
   }
   redirect("/");
 }

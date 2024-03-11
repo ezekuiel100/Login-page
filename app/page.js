@@ -2,7 +2,6 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
-import { z } from "zod";
 
 export default function Home() {
   let [pending, setPending] = useState(false);

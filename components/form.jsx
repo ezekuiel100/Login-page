@@ -16,7 +16,7 @@ function Form() {
           let res = await createUser(formData);
           setError(res);
         } catch (error) {
-          console.log(error);
+          console.log(error.message);
         }
       }}
     >
